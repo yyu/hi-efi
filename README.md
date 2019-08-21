@@ -2,3 +2,4 @@
 
 [tutorial from https://station.eciton.net/fun-and-games-with-gnu-efi.html](./station.eciton.net/)
 [tutorial from https://mjg59.dreamwidth.org/18773.html](./mjg59.dreamwidth.org/)
+[tutorial from http://www.rodsbooks.com/efi-programming/hello.html](./rodsbooks.com/)
