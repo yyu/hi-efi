@@ -4,14 +4,22 @@
 * [tutorial from https://mjg59.dreamwidth.org/18773.html](./mjg59.dreamwidth.org/)
 * [tutorial from http://www.rodsbooks.com/efi-programming/hello.html](./rodsbooks.com/)
 
+## prebuilt OVMF
+
+On Ubuntu, `sudo apt install ovmf` will install a prebuilt OVMF.
+
+Note: per https://github.com/tianocore/tianocore.github.io/wiki/How-to-run-OVMF , "iPXE is enabled on recent builds of QEMU, and may try to network boot if a valid network adapter is detected. To disable iPXE, add `-net none` to the command line."
+
 ## edk2
 
 * https://github.com/tianocore/edk2/blob/master/Readme.md
+
+### build OVMF
+
 * https://github.com/tianocore/tianocore.github.io/wiki/Using-EDK-II-with-Native-GCC
 * https://github.com/tianocore/tianocore.github.io/wiki/Common-instructions
 * https://github.com/tianocore/tianocore.github.io/wiki/How-to-build-OVMF
-
-### build OVMF
+* https://wiki.ubuntu.com/UEFI/EDK2
 
     [21:47:54]~/___/github$ git clone https://github.com/tianocore/edk2.git
     Cloning into 'edk2'...
@@ -259,10 +267,66 @@ see also:
 
 * http://www.linux-kvm.org/page/OVMF
 * http://www.linux-kvm.org/downloads/lersek/ovmf-whitepaper-c770f8c.txt
+* https://wiki.ubuntu.com/UEFI/OVMF
 
 ## boot OVMF
 
-    [17:15:36]~/___/github/hi-efi(master)$ qemu-system-x86_64 -L . --bios ~/___/github/edk2/Build/OvmfX64/DEBUG_GCC5/FV/OVMF.fd -net none
+    $ qemu-system-x86_64 --bios ~/___/github/edk2/Build/OvmfX64/DEBUG_GCC5/FV/OVMF.fd -net none
 
 ![](png/edk2_ovmf.png)
 
+    $ qemu-system-x86_64 \
+      --bios ~/___/github/edk2/Build/OvmfX64/DEBUG_GCC5/FV/OVMF.fd \
+      -net none \
+      -cdrom ~/Downloads/lubuntu-19.04-desktop-amd64.iso \
+      -m 1024 \
+      -enable-kvm
+
+![](png/qemu_kvm_lubuntu1904.png)
+
+
+## run an EFI application
+
+QEMU can use a directory as disk image with `-hda fat:rw:hda-contents` or `-drive file=fat:rw:hda-contents`.
+
+    hi-efi(master)$ mkdir hda-contents
+
+    hi-efi(master)$ (cd station.eciton.net/ && make && cp -v hello.efi ../hda-contents/ecition.efi)
+    gcc -I/usr/include/efi -I/usr/include/efi/x86_64 -I/usr/include/protocol -Wno-error=pragmas -mno-red-zone -mno-avx -fpic  -g -O2 -Wall -Wextra -Werror -fshort-wchar -fno-strict-aliasing -ffreestanding -fno-stack-protector -fno-stack-check -fno-stack-check -fno-merge-all-constants -DCONFIG_x86_64 -DGNU_EFI_USE_MS_ABI -maccumulate-outgoing-args --std=c11 -c hello.c -o hello.o
+    ld -nostdlib --warn-common --no-undefined --fatal-warnings --build-id=sha1 -shared -Bsymbolic /usr/lib/crt0-efi-x86_64.o -L /usr/lib64 -L /usr/lib /usr/lib/gcc/x86_64-linux-gnu/8/libgcc.a -T /usr/lib/elf_x86_64_efi.lds hello.o -o hello.so -lefi -lgnuefi
+    objcopy -j .text -j .sdata -j .data -j .dynamic -j .dynsym -j .rel \
+		-j .rela -j .rel.* -j .rela.* -j .rel* -j .rela* \
+		-j .reloc --target efi-app-x86_64       hello.so hello.efi
+    rm hello.o hello.so
+    'hello.efi' -> '../hda-contents/ecition.efi'
+
+    hi-efi(master)$ (cd mjg59.dreamwidth.org/ && make && cp -v test.efi ../hda-contents/dreamwidth.efi)
+    cc -fno-stack-protector -fpic -fshort-wchar -mno-red-zone -I/usr/include/efi -I/usr/include/efi/x86_64 -I/usr/include/efi/protocol -DEFI_FUNCTION_WRAPPER   -c -o test.o test.c
+    ld -o test.so -nostdlib -znocombreloc -T /usr/lib/elf_x86_64_efi.lds -shared -Bsymbolic -L/usr/lib -L/usr/lib /usr/lib/crt0-efi-x86_64.o -lefi -lgnuefi test.o 
+    objcopy -j .text -j .sdata -j .data \
+	    -j .dynamic -j .dynsym  -j .rel \
+	    -j .rela -j .reloc -j .eh_frame \
+	    --target=efi-app-x86_64 test.so test.efi
+    'test.efi' -> '../hda-contents/dreamwidth.efi'
+
+    hi-efi(master)$ (cd rodsbooks.com/ && make && cp -v hello.efi ../hda-contents/rodsbooks.efi)
+    cc -I/usr/include/efi -I/usr/include/efi/x86_64 -I/usr/include/efi/protocol -fno-stack-protector -fpic -fshort-wchar -mno-red-zone -Wall  -DEFI_FUNCTION_WRAPPER   -c -o main.o main.c
+    ld -nostdlib -znocombreloc -T /usr/lib/elf_x86_64_efi.lds -shared -Bsymbolic -L /usr/lib -L /usr/lib /usr/lib/crt0-efi-x86_64.o  main.o -o hello.so -lefi -lgnuefi
+    objcopy -j .text -j .sdata -j .data -j .dynamic \
+	    -j .dynsym  -j .rel -j .rela -j .reloc \
+	    --target=efi-app-x86_64 hello.so hello.efi
+    'hello.efi' -> '../hda-contents/rodsbooks.efi'
+
+    hi-efi$ qemu-system-x86_64 --bios /usr/share/ovmf/OVMF.fd -net none -hda fat:rw:hda-contents
+
+Directory as disk image:
+
+![](png/qemu_folder_as_disk_image.png)
+
+Run the hello world:
+
+![](png/uefi_helloworld.png)
+
+see also:
+
+* https://wiki.ubuntu.com/UEFI/OVMF
