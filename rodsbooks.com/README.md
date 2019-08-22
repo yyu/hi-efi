@@ -1,5 +1,7 @@
 # tutorial from http://www.rodsbooks.com/efi-programming/hello.html
 
+see also: https://stackoverflow.com/questions/31514866/how-to-compile-uefi-application-using-gnu-efi
+
 ## build
 
     github/hi-efi/rodsbooks.com(master)$ make
