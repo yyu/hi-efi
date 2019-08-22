@@ -14,12 +14,12 @@ Note: per https://github.com/tianocore/tianocore.github.io/wiki/How-to-run-OVMF 
 
 * https://github.com/tianocore/edk2/blob/master/Readme.md
 
-### build OVMF
-
 * https://github.com/tianocore/tianocore.github.io/wiki/Using-EDK-II-with-Native-GCC
 * https://github.com/tianocore/tianocore.github.io/wiki/Common-instructions
 * https://github.com/tianocore/tianocore.github.io/wiki/How-to-build-OVMF
 * https://wiki.ubuntu.com/UEFI/EDK2
+
+### build OVMF
 
     [21:47:54]~/___/github$ git clone https://github.com/tianocore/edk2.git
     Cloning into 'edk2'...
@@ -62,7 +62,7 @@ Note: per https://github.com/tianocore/tianocore.github.io/wiki/How-to-run-OVMF 
     make: Leaving directory '.../___/github/edk2/BaseTools'
 
 
-    [23:58:06]C:~/___/github/edk2(master)$ . edksetup.sh 
+    [23:58:06]C:~/___/github/edk2(master)$ . edksetup.sh
     WORKSPACE: .../___/github/edk2
     EDK_TOOLS_PATH: .../___/github/edk2/BaseTools
     CONF_PATH: .../___/github/edk2/Conf
@@ -99,8 +99,8 @@ Note: per https://github.com/tianocore/tianocore.github.io/wiki/How-to-run-OVMF 
     #  TARGET                List       Optional    Zero or more of the following: DEBUG, RELEASE, NOOPT
     #                                               UserDefined; separated by a space character.
     #                                               If the line is missing or no value is specified, all
-    #                                               valid targets specified in the platform description file 
-    #                                               will attempt to be built. The following line will build 
+    #                                               valid targets specified in the platform description file
+    #                                               will attempt to be built. The following line will build
     #                                               DEBUG platform target.
     TARGET                = DEBUG
 
@@ -109,7 +109,7 @@ Note: per https://github.com/tianocore/tianocore.github.io/wiki/How-to-run-OVMF 
     #                                               or AArch64.
     #                                               Multiple values can be specified on a single line, using
     #                                               space characters to separate the values.  These are used
-    #                                               during the parsing of a platform description file, 
+    #                                               during the parsing of a platform description file,
     #                                               restricting the build output target(s.)
     #                                               The Build Target ARCH is determined by (precedence high to low):
     #                                                 Command-line: -a ARCH option
@@ -131,86 +131,86 @@ Note: per https://github.com/tianocore/tianocore.github.io/wiki/How-to-run-OVMF 
     TOOL_CHAIN_TAG        = GCC5
 
 
-    [00:05:30]C:~/___/github/edk2(master)$ build                                                                                                                                   
-    Build environment: Linux-4.19.37-2rodete1-amd64-x86_64-with-Debian-rodete-rodete                                                                                               
-    Build start time: 00:06:28, Aug.22 2019                                                                                                                                        
-																						   
-    WORKSPACE        = .../___/github/edk2                                                                                                               
-    EDK_TOOLS_PATH   = .../___/github/edk2/BaseTools                                                                                                     
-    CONF_PATH        = .../___/github/edk2/Conf                                                                                                          
-    PYTHON_COMMAND   = /usr/bin/python3.6                                                                                                                                          
-																						   
-																						   
-    Processing meta-data .                                                                                                                                                         
-    Architecture(s)  = X64                                                                                                                                                         
-    Build target     = DEBUG                                                                                                                                                       
-    Toolchain        = GCC5                                                                                                                                                        
-																						   
-    Active Platform          = .../___/github/edk2/OvmfPkg/OvmfPkgX64.dsc                                                                                
+    [00:05:30]C:~/___/github/edk2(master)$ build
+    Build environment: Linux-4.19.37-2rodete1-amd64-x86_64-with-Debian-rodete-rodete
+    Build start time: 00:06:28, Aug.22 2019
+																						
+    WORKSPACE        = .../___/github/edk2
+    EDK_TOOLS_PATH   = .../___/github/edk2/BaseTools
+    CONF_PATH        = .../___/github/edk2/Conf
+    PYTHON_COMMAND   = /usr/bin/python3.6
+																						
+																						
+    Processing meta-data .
+    Architecture(s)  = X64
+    Build target     = DEBUG
+    Toolchain        = GCC5
+																						
+    Active Platform          = .../___/github/edk2/OvmfPkg/OvmfPkgX64.dsc
 
     ...
 
-    Fd File Name:OVMF (.../___/github/edk2/Build/OvmfX64/DEBUG_GCC5/FV/OVMF.fd)                                                                          
-																						   
-    Generate Region at Offset 0x0                                                                                                                                                  
-       Region Size = 0x40000                                                                                                                                                       
-       Region Name = DATA                                                                                                                                                          
-	 
-    Generate Region at Offset 0x40000                                                                                                                                              
-       Region Size = 0x1000                                                                                                                                                        
-       Region Name = None                                                                                                                                                          
-																						   
-    Generate Region at Offset 0x41000                                                                                                                                              
-       Region Size = 0x1000                                                                                                                                                        
-       Region Name = DATA                                                                                                                                                          
-																						   
+    Fd File Name:OVMF (.../___/github/edk2/Build/OvmfX64/DEBUG_GCC5/FV/OVMF.fd)
+																						
+    Generate Region at Offset 0x0
+       Region Size = 0x40000
+       Region Name = DATA
+	
+    Generate Region at Offset 0x40000
+       Region Size = 0x1000
+       Region Name = None
+																						
+    Generate Region at Offset 0x41000
+       Region Size = 0x1000
+       Region Name = DATA
+																						
     Generate Region at Offset 0x42000
-       Region Size = 0x42000                                                                                                         
-       Region Name = None                                                                                                                                                          
-											      
-    Generate Region at Offset 0x84000                                                                                                                                              
-       Region Size = 0x348000                                                                                                                                                      
-       Region Name = FV                                                                                                                                                            
-																						   
-    Generating FVMAIN_COMPACT FV                                                                                                                                                   
-																						   
-    Generating PEIFV FV                                                                                                                            
-    ####################################                                                                                                 
-    Generating DXEFV FV                                                                                                                                                            
-    #######################################                                       
-    ########################################                                                                                                                        
-    ########################################                                                                                                                                       
-    ########################################                                                            
-    ########################################                                                                                                                                       
-    ########################################     
-    ########################################                                                                                                                                       
-    ########################################                                                         
-    ########################################                                                                                                                                       
-    Generate Region at Offset 0x3CC000                              
-       Region Size = 0x34000                                                                                                                                                       
-       Region Name = FV                       
-																						   
-    Generating SECFV FV                                      
-    ######                                                                                                                                
-    Fd File Name:OVMF_VARS (.../___/github/edk2/Build/OvmfX64/DEBUG_GCC5/FV/OVMF_VARS.fd)                                                                
-																						  
-    Generate Region at Offset 0x0                                                                                                                                    
-       Region Size = 0x40000                                                                                                                                                       
-       Region Name = DATA                                                                                 
-																						   
-    Generate Region at Offset 0x40000          
-       Region Size = 0x1000                                                                                                                                                        
-       Region Name = None                                                                                   
-																						   
-    Generate Region at Offset 0x41000                                    
-       Region Size = 0x1000                                                                                                                                                        
-       Region Name = DATA                   
+       Region Size = 0x42000
+       Region Name = None
+											
+    Generate Region at Offset 0x84000
+       Region Size = 0x348000
+       Region Name = FV
+																						
+    Generating FVMAIN_COMPACT FV
+																						
+    Generating PEIFV FV
+    ####################################
+    Generating DXEFV FV
+    #######################################
+    ########################################
+    ########################################
+    ########################################
+    ########################################
+    ########################################
+    ########################################
+    ########################################
+    ########################################
+    Generate Region at Offset 0x3CC000
+       Region Size = 0x34000
+       Region Name = FV
+																						
+    Generating SECFV FV
+    ######
+    Fd File Name:OVMF_VARS (.../___/github/edk2/Build/OvmfX64/DEBUG_GCC5/FV/OVMF_VARS.fd)
+																						
+    Generate Region at Offset 0x0
+       Region Size = 0x40000
+       Region Name = DATA
+																						
+    Generate Region at Offset 0x40000
+       Region Size = 0x1000
+       Region Name = None
+																						
+    Generate Region at Offset 0x41000
+       Region Size = 0x1000
+       Region Name = DATA
 
     Generate Region at Offset 0x42000
        Region Size = 0x42000
        Region Name = None
 
-    Fd File Name:OVMF_CODE (.../___/github/edk2/Build/OvmfX64/DEBUG_GCC5/FV/OVMF_CODE.fd)                                                               
+    Fd File Name:OVMF_CODE (.../___/github/edk2/Build/OvmfX64/DEBUG_GCC5/FV/OVMF_CODE.fd)
 
     Generate Region at Offset 0x0
        Region Size = 0x348000
@@ -220,7 +220,7 @@ Note: per https://github.com/tianocore/tianocore.github.io/wiki/How-to-run-OVMF 
        Region Size = 0x34000
        Region Name = FV
 
-    Fd File Name:MEMFD (.../___/github/edk2/Build/OvmfX64/DEBUG_GCC5/FV/MEMFD.fd)                                                                       
+    Fd File Name:MEMFD (.../___/github/edk2/Build/OvmfX64/DEBUG_GCC5/FV/MEMFD.fd)
 
     Generate Region at Offset 0x0
        Region Size = 0x6000
@@ -251,7 +251,7 @@ Note: per https://github.com/tianocore/tianocore.github.io/wiki/How-to-run-OVMF 
        Region Size = 0xB00000
        Region Name = FV
 
-    GUID cross reference file can be found at .../___/github/edk2/Build/OvmfX64/DEBUG_GCC5/FV/Guid.xref                                                 
+    GUID cross reference file can be found at .../___/github/edk2/Build/OvmfX64/DEBUG_GCC5/FV/Guid.xref
 
     FV Space Information
     SECFV [10%Full] 212992 total, 22384 used, 190608 free
@@ -302,7 +302,7 @@ QEMU can use a directory as disk image with `-hda fat:rw:hda-contents` or `-driv
 
     hi-efi(master)$ (cd mjg59.dreamwidth.org/ && make && cp -v test.efi ../hda-contents/dreamwidth.efi)
     cc -fno-stack-protector -fpic -fshort-wchar -mno-red-zone -I/usr/include/efi -I/usr/include/efi/x86_64 -I/usr/include/efi/protocol -DEFI_FUNCTION_WRAPPER   -c -o test.o test.c
-    ld -o test.so -nostdlib -znocombreloc -T /usr/lib/elf_x86_64_efi.lds -shared -Bsymbolic -L/usr/lib -L/usr/lib /usr/lib/crt0-efi-x86_64.o -lefi -lgnuefi test.o 
+    ld -o test.so -nostdlib -znocombreloc -T /usr/lib/elf_x86_64_efi.lds -shared -Bsymbolic -L/usr/lib -L/usr/lib /usr/lib/crt0-efi-x86_64.o -lefi -lgnuefi test.o
     objcopy -j .text -j .sdata -j .data \
 	    -j .dynamic -j .dynsym  -j .rel \
 	    -j .rela -j .reloc -j .eh_frame \
