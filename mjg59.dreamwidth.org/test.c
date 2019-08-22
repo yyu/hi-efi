@@ -8,7 +8,7 @@ efi_main (EFI_HANDLE image, EFI_SYSTEM_TABLE *systab)
 
         conout = systab->ConOut;
         InitializeLib(image, systab);
-        uefi_call_wrapper(conout->OutputString, 2, conout, L"Hello World!\n\r");
+        uefi_call_wrapper(conout->OutputString, 2, conout, L"mjg59: Hello World!\n\r");
 
         return EFI_SUCCESS;
 }
