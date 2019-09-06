@@ -330,3 +330,4 @@ Run the hello world:
 see also:
 
 * https://wiki.ubuntu.com/UEFI/OVMF
+* https://wiki.osdev.org/UEFI_Bare_Bones
